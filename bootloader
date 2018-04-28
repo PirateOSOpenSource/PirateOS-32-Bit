@@ -57,7 +57,8 @@ start:              ; start label from where our code starts
     start_os_intro db '   PirateOS v0.0.1',0
     press_key db '     > Press any key <',0
 
-    login_username db 'User : ',0
+    login_username db 'Username : ',0
+    login_password db 'Password : ',0
     
     display_text db '            ! PirateOS v0.0.1 !', 0
 	display_text_final db '       ! PirateOS v0.0.1 !', 0
@@ -121,11 +122,11 @@ _print_GreenColor_String:
 
 .done_print:
     ret
-    
-;****** print string with green color
 
-_print_RedColor_String:
-    mov bl,12
+;****** print string with white color
+
+_print_WhiteColor_String:
+    mov bl,15
     mov ah, 0x0E
 
 .repeat_next_char:
@@ -138,10 +139,26 @@ _print_RedColor_String:
 .done_print:
     ret
 
-;****** print string with white color
+;****** print string with green color
 
-_print_WhiteColor_String:
-    mov bl,15
+_print_GreenColor_String:
+    mov bl,10
+    mov ah, 0x0E
+
+.repeat_next_char:
+    lodsb
+    cmp al, 0
+    je .done_print
+    int 0x10
+    jmp .repeat_next_char
+
+.done_print:
+    ret
+
+;****** print string with red color
+
+_print_RedColor_String:
+    mov bl,12
     mov ah, 0x0E
 
 .repeat_next_char:
